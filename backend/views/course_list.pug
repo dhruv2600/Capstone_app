@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each course in course_list
+      li
+        p=course.name 
+
+    else
+      li There are no books.

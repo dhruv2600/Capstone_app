@@ -4,12 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+var api = require('./routes/api/index');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var examrouter=require('./api/resources/Exam_add');
 
-var courserouter=require('./controller/update_controllers/createcourses');
+var courserouter=require('./routes/courses');
 
 var paperrouter=require('./api/resources/Paper_add');
 
@@ -20,22 +22,29 @@ var univrouter=require('./controller/update_controllers/createuniv');
 var usersRouter=require('./controller/update_controllers/createuser');
 
 
+var course
+
+
 const Exam=require('./models/Exam');
 
 var app = express();
 
 
+
+
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://root-1:dhruv1978@cluster0.qshzo.mongodb.net/autocorrector_app?retryWrites=true&w=majority';
+var mongoDB = 'mongodb+srv://RithvikS:capstone123@cluster0.m8kbi.mongodb.net/myFirstDatabase?retryWrites=true&w=ma';
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true})
-.then((result)=>console.log('connected to the db'));
+.then((result)=>console.log('connected to rithviks  db'));
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
+
+app.engine('pug', require('pug').__express)
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -44,17 +53,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/users', usersRouter);
-app.use('/api/exam',examrouter);
-app.use('/course',courserouter);
-app.use('/api/paper',paperrouter);
-app.use('/', indexRouter);
-
-app.use('/univeradd',univrouter);
-
-app.use('/test',examdisplayer);
-
-app.use('/userss',usersRouter);
+app.use('/api',api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
