@@ -88,13 +88,22 @@ exports.course_update_post = function(req, res) {
 exports.course_user= function(req, res) {
     
    
-    User.findOne({'_id':req.param.id},'name')
+    User.findOne({'_id':req.params.id})
+    .populate('courses')
+    
     .exec(function (err, list_courses) {
-        if (err) { console.log("error"); return next(err); }
-        //Successful, so render
-        console.log(list_courses);
         
-        res.send("HELLO THERE");
+        //Successful, so render
+        var data=[];
+        console.log(list_courses.courses[1]);
+        for(let i=0;i<list_courses.courses.length;i++) {
+            data.push({
+                'name':list_courses.courses[i].name,
+                'id':list_courses.courses[i]._id
+            });
+        }
+        console.log(data);
+        res.send(data);
       });
     
 }

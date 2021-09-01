@@ -1,17 +1,39 @@
 express= require('express');
 
+var app = express();
 
-app.use('/users', usersRouter);
-app.use('/api/exam',examrouter);
+var router = express.Router();
 
-app.use('/api/paper',paperrouter);
-app.use('/', indexRouter);
+var api = require('../../routes/api/index');
 
-app.use('/univeradd',univrouter);
+var indexRouter = require('../../routes/index');
 
-app.use('/test',examdisplayer);
+var usersRouter = require('../../routes/users');
 
-app.use('/userss',usersRouter);
+var examrouter=require('../../api/resources/Exam_add');
 
+var courserouter=require('../../routes/courses');
 
-app.use('/cou_v1',courserouter);
+var paperrouter=require('../../api/resources/Paper_add');
+
+var examdisplayer=require('../../controller/read_controllers/getexams');
+
+var univrouter=require('../../controller/update_controllers/createuniv');
+
+var usersRouter=require('../../controller/update_controllers/createuser');
+
+router.get('/users', usersRouter);
+router.get('/api/exam',examrouter);
+
+router.get('/api/paper',paperrouter);
+router.get('/', indexRouter);
+
+router.get('/univeradd',univrouter);
+
+router.get('/test',examdisplayer);
+
+router.get('/userss',usersRouter);
+
+router.use('/cou_v1',courserouter);
+
+module.exports=router;
