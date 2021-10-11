@@ -8,7 +8,8 @@ var PaperSchema = new Schema(
     answers:[ {type:String} ],
     studentID:{type:Schema.Types.ObjectId, ref: 'User'},
     time:{type: Date, required: false},
-    marks:{type:Number}
+    marks:{type:Number},
+    name:{type:String}
   }
 );
 

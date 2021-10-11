@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+var paper=require('./Papers');
+
 var ExamSchema = new Schema(
   {
     title: {type: String, required: true},
@@ -10,12 +12,13 @@ var ExamSchema = new Schema(
       {
         qname:{type:String,required:true},
         fullmarks:{type:Number,required:true},
+        right_answers:{type:String,required:false}
       }
-    ],
-    right_answers:[ {type:String} ],
-    student_answers:[{type:Schema.Types.ObjectId,ref:'Paper',required: false}],
-    time:{type: Date, required: false} //make it automatic
-  }
+    ],    
+    student_answers:[{type:Schema.Types.ObjectId,ref:paper,required: false}],
+    duration:{type: Number,required:false},
+    dateofexam : { type : Date, default: Date.now } //make it automatic
+  },
 );
 
 // Virtual for book's URL

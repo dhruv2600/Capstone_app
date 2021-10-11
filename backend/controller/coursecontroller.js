@@ -8,33 +8,25 @@ var Exam=require('../models/Exam');
 
 var University=require('../models/University');
 
+
+
 // Display list of all Authors.
 var async=require('async');
 
 
+
 exports.course_index=function(req,res){
 
-    async.parallel({
-        c_count: function(callback) {
-            Course.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
-        },
-        p_count: function(callback) {
-            Paper.countDocuments({}, callback);
-        },
-        e_count: function(callback) {
-            Exam.countDocuments({status:'Available'}, callback);
-        },
-        u_count: function(callback) {
-            User.countDocuments({}, callback);
-        },
-        un_count: function(callback) {
-            University.countDocuments({}, callback);
-        }
-    }, function(err, results) {
-        console.log(results);
-        res.render('index', { title: 'Local Library Home', error: err, data: results });
-    });
+    User.findOne({'_id':req.params.id})
+    .populate('courses')
+    .exec(function (err, list_courses) {
+        //Successful, so render
+       res.send(list_courses.courses);
+      });
+
 };
+
+
 
 exports.course_list = function(req, res) {
     Course.find({}, 'name ')
@@ -44,15 +36,46 @@ exports.course_list = function(req, res) {
       //Successful, so render
       console.log(list_courses);
       
-      res.render('course_list', { title: 'Book List', course_list: list_courses });
+      res.send(list_courses);
     });
-
-
 };
 
-// Display detail page for a specific Author.
+// Display detail page for a specific Author. //user/id return the full user document
+                                               //courses/cid -> course details
+                                                //exam de tails
+
+
+exports.course_deets=function(req,res){
+
+
+
+    Course.findOne({'_id':req.params.cid})
+    .exec(function(err,req_doc){
+        res.send(req_doc);
+    })
+
+}
+
+
 exports.course_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: course detail: ' + req.params.id);
+    
+    User.findOne({'_id':req.params.id})
+    .populate('courses')
+    
+    .exec(function (err, list_courses) {
+        
+        //Successful, so render
+        var data=[];
+        console.log(list_courses.courses[1]);
+        for(let i=0;i<list_courses.courses.length;i++) {
+            data.push({
+                'name':list_courses.courses[i].name,
+                'id':list_courses.courses[i]._id
+            });
+        }
+        console.log(data);
+        res.send(data);
+      });
 };
 
 // Display Author create form on GET.
@@ -90,20 +113,19 @@ exports.course_user= function(req, res) {
    
     User.findOne({'_id':req.params.id})
     .populate('courses')
-    
     .exec(function (err, list_courses) {
         
         //Successful, so render
         var data=[];
-        console.log(list_courses.courses[1]);
+        console.log(list_courses);
+        console.log(list_courses.courses[0].users)
         for(let i=0;i<list_courses.courses.length;i++) {
             data.push({
                 'name':list_courses.courses[i].name,
                 'id':list_courses.courses[i]._id
             });
         }
-        console.log(data);
-        res.send(data);
+        res.send(list_courses.courses);
       });
     
 }

@@ -1,0 +1,26 @@
+html
+   head
+      title Form Tester
+   body
+      form(action = "/api/cou_v1/:sid/courses/:cid/course/exams/add_form", method = "POST" , enctype="multipart/form-data")
+         div
+            label(for = "title") title:
+            input(name = "title" value = "Hi" type="text")
+         br
+         div
+            label(for="csvfile") questions:
+            input(name = "csvfile"  type="file") 
+         br
+         div
+            label(for="src") source material:
+            input(name = "src"  type="file") 
+         br
+         div
+            label(for="duration") duration(in hours):
+            input(name = "duration"  type="Number") 
+         br
+         div
+            label(for="timeofexam") date of exam:
+            input(name = "timeofexam"  type="date") 
+         br
+         button(type = "submit") Add exam to database

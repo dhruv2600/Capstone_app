@@ -1,0 +1,16 @@
+html
+  head
+  body
+    input#csv(name='csv' type='file' accept='.csv')
+    script.
+      var fileInput = document.getElementById('csv');
+      fileInput.addEventListener('change', function (event) {
+      var csvInput = event.target;
+      var file = csvInput.files[0];
+      Papa.parse(file, {
+      complete: function (results) {
+      console.log(results.data);
+      // process the JSON
+      }
+      });
+      });
