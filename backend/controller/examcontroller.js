@@ -32,6 +32,7 @@ exports.add_form=function(req,res){
 exports.exam_deets=function(req,res){
     Exam.find({'_id':req.params.eid})
     .exec(function(err,req_doc){
+        console.log(req.params.eid);
         res.send(req_doc)
     })
 }

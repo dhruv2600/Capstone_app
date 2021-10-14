@@ -38,6 +38,7 @@ router.route('/')
   .populate('exams')
   .exec(function (err, list_courses) {
       //Successful, so render
+      console.log(req.params.cid);
      res.send(list_courses.exams);
     });
 })

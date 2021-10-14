@@ -14,6 +14,7 @@ var examrouter=require('../../routes/exams');
 
 var courserouter=require('../../routes/courses');
 
+var insert_user_router=require('../../controller/update_controllers/createuser');
 
 var paperRouter=require('../papers')
 
@@ -21,5 +22,6 @@ var paperRouter=require('../papers')
 
 router.use('/user',usersRouter);
 
+router.use('/add',insert_user_router);
 
 module.exports=router;

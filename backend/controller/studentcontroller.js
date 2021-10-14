@@ -19,9 +19,6 @@ exports.student_doc = function(req, res) {
        res.send(list_courses)
       });
 };
-
-
-
 exports.course_list = function(req, res) {
     Course.find({}, 'name ')
     .exec(function (err, list_courses) {

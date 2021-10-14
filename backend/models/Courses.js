@@ -4,12 +4,12 @@ var Schema = mongoose.Schema;
 
 var exams=require('./Exam');
 
-var users=require('./User');
+//var users=require('./User');
 
 var CourseSchema = new Schema(
   {
     name: {type: String, required: true},
-    hod:{type:Schema.Types.ObjectId , ref: users , required:false},
+    //hod:{type:Schema.Types.ObjectId , ref: users , required:false},
     exams:[{type: Schema.Types.ObjectId, ref: exams, required:false}],
     courseinfo:{type:String},
   },

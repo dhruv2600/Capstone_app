@@ -11,12 +11,12 @@ router.get('/', function(req, res, next) {
 router.get('/add_user',(req,res)=>{
 
   const user= new User({
-    name:'AARTI',
-    email:'AARTI@gmail.com',
+    name:'dhruvs',
+    email:'dhruvs@gmail.com',
     password:'hashing',
-    teacher: 1,
-    Univ:'PES University'
-
+    teacher: 0,
+    Univ:'PES University',
+    srn:'PES2201800115'
   })
   user.save()
   .then((result)=>{
